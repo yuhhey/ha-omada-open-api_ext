@@ -633,6 +633,82 @@ class OmadaApiClient:
         _LOGGER.debug("Unblocking client %s", client_mac)
         await self._authenticated_request("post", url)
 
+    async def set_client_rate_limit(
+        self, site_id: str, client_mac: str, down_kbps: int, up_kbps: int
+    ) -> None:
+        """Set a custom upload/download rate limit for a client.
+
+        Args:
+            site_id: Site ID the client belongs to
+            client_mac: MAC address of the client
+            down_kbps: Download limit in kbps
+            up_kbps: Upload limit in kbps
+
+        Raises:
+            OmadaApiError: If the request fails
+
+        """
+        url = (
+            f"{self._api_url}/openapi/v1/{self._omada_id}"
+            f"/sites/{site_id}/clients/{client_mac}/ratelimit"
+        )
+        _LOGGER.debug(
+            "Setting rate limit for client %s: down=%d up=%d kbps",
+            client_mac,
+            down_kbps,
+            up_kbps,
+        )
+        await self._authenticated_request(
+            "patch",
+            url,
+            json_data={
+                "mode": 0,
+                "customRateLimit": {
+                    "downEnable": True,
+                    "downUnit": 1,  # kbps
+                    "downLimit": down_kbps,
+                    "upEnable": True,
+                    "upUnit": 1,  # kbps
+                    "upLimit": up_kbps,
+                },
+            },
+        )
+
+    async def clear_client_rate_limit(self, site_id: str, client_mac: str) -> None:
+        """Clear a client's custom rate limit.
+
+        Sends valid limits with both directions disabled, matching the
+        enable flags the controller actually honors.
+
+        Args:
+            site_id: Site ID the client belongs to
+            client_mac: MAC address of the client
+
+        Raises:
+            OmadaApiError: If the request fails
+
+        """
+        url = (
+            f"{self._api_url}/openapi/v1/{self._omada_id}"
+            f"/sites/{site_id}/clients/{client_mac}/ratelimit"
+        )
+        _LOGGER.debug("Clearing rate limit for client %s", client_mac)
+        await self._authenticated_request(
+            "patch",
+            url,
+            json_data={
+                "mode": 0,
+                "customRateLimit": {
+                    "downEnable": False,
+                    "downUnit": 2,  # mbps
+                    "downLimit": 1024,
+                    "upEnable": False,
+                    "upUnit": 2,  # mbps
+                    "upLimit": 1024,
+                },
+            },
+        )
+
     async def get_firmware_info(self, site_id: str, device_mac: str) -> dict[str, Any]:
         """Get latest firmware information for a device.
 
