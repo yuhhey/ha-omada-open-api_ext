@@ -22,6 +22,7 @@ from homeassistant.helpers import (
 )
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
+from . import services
 from .api import OmadaApiAuthError, OmadaApiClient, OmadaApiError
 from .auth import WebSessionAuth
 from .clients import normalize_client_mac
@@ -166,6 +167,7 @@ async def async_setup(hass: HomeAssistant, config: dict[str, Any]) -> bool:
         "debug_ssid_switches",
         debug_ssid_switches_service,
     )
+    await services.async_setup_services(hass)
     return True
 
 

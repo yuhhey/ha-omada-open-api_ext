@@ -633,6 +633,9 @@
         },
         "no_runtime_data": {
             "message": "No runtime data available for config entry {config_entry_id}."
+        },
+        "ambiguous_site": {
+            "message": "Config entry {config_entry_id} monitors more than one site; specify site_id."
         }
     },
     "issues": {
