@@ -16,6 +16,16 @@ def normalize_client_mac(mac: str) -> str:
     return mac.replace(":", "").replace("-", "").upper()
 
 
+def _rate_limited(client: dict[str, Any]) -> bool:
+    """Whether a rate limit is currently enforced on this client."""
+    rate_limit = client.get("rateLimit")
+    if not isinstance(rate_limit, dict):
+        return False
+    enabled = rate_limit.get("enable", True)
+    has_direction = rate_limit.get("downEnable") or rate_limit.get("upEnable")
+    return bool(enabled and has_direction)
+
+
 def process_client(client: dict[str, Any]) -> dict[str, Any]:
     """Process and normalize client data.
 
@@ -80,6 +90,7 @@ def process_client(client: dict[str, Any]) -> dict[str, Any]:
         "uptime": client.get("uptime"),
         "last_seen": client.get("lastSeen"),
         "blocked": client.get("blocked", False),
+        "rate_limited": _rate_limited(client),
         "guest": client.get("guest", False),
         "power_save": client.get("powerSave", False),
         "auth_status": client.get("authStatus"),
