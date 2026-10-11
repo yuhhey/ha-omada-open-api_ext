@@ -28,6 +28,7 @@
 - [Configuration](#configuration)
 - [Entities](#entities)
 - [Automation Examples](#automation-examples)
+- [Actions](#actions)
 - [Use Cases](#use-cases)
 - [Options](#options)
 - [Supported Devices](#supported-devices)
@@ -345,6 +346,40 @@ automation:
       - action: switch.turn_off
         target:
           entity_id: switch.main_switch_port_5_poe
+```
+
+---
+
+## Actions
+
+These act directly on the controller, by MAC address, independent of which
+clients were picked for entity creation under Options → Client Selection —
+useful for automations or external tools that need to see or control every
+client Omada knows about, not just the ones shown as entities. `site_id` can
+be omitted when the config entry monitors exactly one site.
+
+| Action | Fields | Notes |
+|---|---|---|
+| `omada_open_api.block_client` | `config_entry_id`, `site_id?`, `mac` | Blocks a client from the network. |
+| `omada_open_api.unblock_client` | `config_entry_id`, `site_id?`, `mac` | Restores network access. |
+| `omada_open_api.set_client_rate_limit` | `config_entry_id`, `site_id?`, `mac`, `down_kbps`, `up_kbps` | Sets a custom upload/download cap. |
+| `omada_open_api.clear_client_rate_limit` | `config_entry_id`, `site_id?`, `mac` | Removes a client's custom rate limit. |
+| `omada_open_api.get_client_snapshot` | `config_entry_id`, `site_id?` | Returns every client for the site, keyed by MAC, with exact byte counters. Call with Response Data. |
+
+```yaml
+action: omada_open_api.set_client_rate_limit
+data:
+  config_entry_id: a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6
+  mac: "AA-BB-CC-DD-EE-FF"
+  down_kbps: 1000
+  up_kbps: 500
+```
+
+```yaml
+action: omada_open_api.get_client_snapshot
+data:
+  config_entry_id: a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6
+response_variable: snapshot
 ```
 
 ---
