@@ -56,18 +56,25 @@ The integration follows Home Assistant's coordinator architecture:
 
 ## Branching model
 
+- `main` and `dev` are the only branches pushed to `origin`.
 - `main` is release-only: it receives merges from `dev` and release-metadata
   commits, never direct feature/bug commits.
 - `dev` is the integration/staging branch: `feature/*` and `bug/*` branches
   start from `dev` and merge back into it. Real-controller and Home Assistant
   runtime verification happens against `dev`. No development happens directly
   on `dev`.
+- `feature/*` and `bug/*` branches stay local only; never push them to
+  `origin`.
 - Only merge `dev` into `main` once the merged work has been verified on `dev`
-  (tests, `make check`, and applicable runtime verification). A release is cut
-  from `main` after that merge.
+  (tests, `make check`, and applicable runtime verification). A stable release
+  is cut from `main` after that merge.
+- Beta/RC builds for HACS beta-channel testing are tagged directly from `dev`
+  (see Documentation and release requirements) without merging to `main`.
 - CI (`.github/workflows/ci.yml`) runs on pushes and pull requests targeting
   both `main` and `dev`. The tag-triggered release workflow
-  (`.github/workflows/release.yml`) still only runs off `v*` tags on `main`.
+  (`.github/workflows/release.yml`) runs off any `v*` tag, on either branch;
+  it marks the GitHub Release as a prerelease whenever the tag is not a plain
+  `X.Y.Z` version.
 
 ## Development environment
 
@@ -248,14 +255,33 @@ Update user-facing documentation when changing configuration, entities,
 services/actions, supported behavior, or troubleshooting guidance. Keep public
 documentation in `README.md` and `TROUBLESHOOTING.md` accurate.
 
-For a release, first ensure the feature/fix work has been verified on `dev`
-(see Branching model) and merged into `main`, local checks and CI are green,
-and then:
+### Beta/RC builds (HACS beta channel, from `dev`)
+
+Before a stable release, cut beta/RC builds directly from `dev` for
+real-controller testing through HACS's beta channel:
+
+1. On `dev`, set a prerelease version in
+   `custom_components/omada_open_api/manifest.json` and `pyproject.toml`
+   (e.g. `1.11.0b1`, `1.11.0rc1`) — anything other than a plain `X.Y.Z`.
+2. Commit the version bump on `dev`, tag `vX.Y.0bN`/`vX.Y.0rcN`, and push
+   `dev` plus the tag.
+3. The release workflow detects the non-`X.Y.Z` tag and publishes the GitHub
+   Release as a prerelease. In HACS, enable "Show beta versions" for this
+   repository, then select that version in the "Redownload" dialog to
+   install it on a real controller.
+4. Iterate with additional beta/RC tags on `dev` as needed. None of this
+   touches `main`.
+
+### Stable release (from `main`)
+
+First ensure the feature/fix work has been verified on `dev` (see Branching
+model, and beta/RC testing above) and merged into `main`, local checks and CI
+are green, and then:
 
 1. Select a semantic version: patch for fixes, minor for new features/entities,
    major for breaking changes.
-2. Update the same version in `custom_components/omada_open_api/manifest.json`
-   and `pyproject.toml`.
+2. Update the same plain `X.Y.Z` version in
+   `custom_components/omada_open_api/manifest.json` and `pyproject.toml`.
 3. Write user-facing `RELEASE_NOTES.md` for that exact version.
 4. Commit the release metadata, tag `vX.Y.Z`, and push `main` plus the tag.
 

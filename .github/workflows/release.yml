@@ -72,10 +72,13 @@ jobs:
   version-check:
     name: Version Consistency
     runs-on: ubuntu-latest
+    outputs:
+      is_prerelease: ${{ steps.check.outputs.is_prerelease }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Verify tag matches manifest.json version
+        id: check
         run: |
           TAG_VERSION="${GITHUB_REF_NAME#v}"
           MANIFEST_VERSION=$(python3 -c "import json; print(json.load(open('custom_components/omada_open_api/manifest.json'))['version'])")
@@ -87,6 +90,17 @@ jobs:
             exit 1
           fi
           echo "✅ Versions match"
+
+          # A pure X.Y.Z tag is a stable release; anything else (e.g. b1, rc1,
+          # beta.1, alpha1) is a beta/rc build cut from dev for HACS beta
+          # testing and must be published as a GitHub prerelease.
+          if [[ "$TAG_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Release type:     stable"
+            echo "is_prerelease=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Release type:     prerelease (beta/rc)"
+            echo "is_prerelease=true" >> "$GITHUB_OUTPUT"
+          fi
 
   release:
     name: Create GitHub Release
@@ -136,6 +150,7 @@ jobs:
         uses: softprops/action-gh-release@3d0d9888cb7fd7b750713d6e236d1fcb99157228 # v3.0.2
         with:
           files: omada_open_api.zip
+          prerelease: ${{ needs.version-check.outputs.is_prerelease }}
           body: |
             ${{ steps.release_notes.outputs.body }}
 
