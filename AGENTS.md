@@ -54,6 +54,21 @@ The integration follows Home Assistant's coordinator architecture:
 - Paginate list endpoints with their documented `page`/`pageSize` parameters
   and use `totalRows` to fetch all results.
 
+## Branching model
+
+- `main` is release-only: it receives merges from `dev` and release-metadata
+  commits, never direct feature/bug commits.
+- `dev` is the integration/staging branch: `feature/*` and `bug/*` branches
+  start from `dev` and merge back into it. Real-controller and Home Assistant
+  runtime verification happens against `dev`. No development happens directly
+  on `dev`.
+- Only merge `dev` into `main` once the merged work has been verified on `dev`
+  (tests, `make check`, and applicable runtime verification). A release is cut
+  from `main` after that merge.
+- CI (`.github/workflows/ci.yml`) runs on pushes and pull requests targeting
+  both `main` and `dev`. The tag-triggered release workflow
+  (`.github/workflows/release.yml`) still only runs off `v*` tags on `main`.
+
 ## Development environment
 
 Worktrees must be created below `.worktrees/<name>` inside the repository. The
@@ -233,8 +248,9 @@ Update user-facing documentation when changing configuration, entities,
 services/actions, supported behavior, or troubleshooting guidance. Keep public
 documentation in `README.md` and `TROUBLESHOOTING.md` accurate.
 
-For a release, first ensure the feature/fix work is on `main`, local checks and
-CI are green, and then:
+For a release, first ensure the feature/fix work has been verified on `dev`
+(see Branching model) and merged into `main`, local checks and CI are green,
+and then:
 
 1. Select a semantic version: patch for fixes, minor for new features/entities,
    major for breaking changes.
