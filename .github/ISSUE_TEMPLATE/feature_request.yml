@@ -8,14 +8,14 @@ body:
       value: |
         Thanks for suggesting an improvement!
 
-        Before opening a new request, please [search existing feature requests](https://github.com/bullitt186/ha-omada-open-api/issues?q=is%3Aissue+label%3Aenhancement) to see if a similar idea has already been proposed.
+        Before opening a new request, please [search existing feature requests](https://github.com/yuhhey/ha-omada-open-api_ext/issues?q=is%3Aissue+label%3Aenhancement) to see if a similar idea has already been proposed.
 
   - type: checkboxes
     id: checklist
     attributes:
       label: Checklist
       options:
-        - label: I have searched [existing feature requests](https://github.com/bullitt186/ha-omada-open-api/issues?q=is%3Aissue+label%3Aenhancement) and this is not a duplicate.
+        - label: I have searched [existing feature requests](https://github.com/yuhhey/ha-omada-open-api_ext/issues?q=is%3Aissue+label%3Aenhancement) and this is not a duplicate.
           required: true
         - label: This request contains only one feature (open separate issues for separate features).
           required: true

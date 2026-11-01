@@ -1,10 +1,10 @@
-# Contributing to TP-Link Omada Open API
+# Contributing to TP-Link Omada Open API (ext)
 
-Contributions are welcome — bug reports, feature requests, pull requests, documentation, and testing with different Omada setups.
+This is a fork of [bullitt186/ha-omada-open-api](https://github.com/bullitt186/ha-omada-open-api). Contributions are welcome — bug reports, feature requests, pull requests, documentation, and testing with different Omada setups — but please report them against this fork, not upstream.
 
 ## Reporting Bugs & Requesting Features
 
-Use our [issue templates](https://github.com/bullitt186/ha-omada-open-api/issues/new/choose): [Bug Report](https://github.com/bullitt186/ha-omada-open-api/issues/new?template=bug_report.yml) (the form walks you through what's needed — debug logs, diagnostics, environment) or [Feature Request](https://github.com/bullitt186/ha-omada-open-api/issues/new?template=feature_request.yml) (describe the problem, not just the fix). For general questions, use the [Community forum](https://community.home-assistant.io/) instead.
+Use our [issue templates](https://github.com/yuhhey/ha-omada-open-api_ext/issues/new/choose): [Bug Report](https://github.com/yuhhey/ha-omada-open-api_ext/issues/new?template=bug_report.yml) (the form walks you through what's needed — debug logs, diagnostics, environment) or [Feature Request](https://github.com/yuhhey/ha-omada-open-api_ext/issues/new?template=feature_request.yml) (describe the problem, not just the fix). For general questions, use the [Community forum](https://community.home-assistant.io/) instead.
 
 Check [TROUBLESHOOTING.md](TROUBLESHOOTING.md) first — your issue may already be covered there.
 
@@ -20,8 +20,8 @@ This project uses VS Code devcontainers for a consistent development environment
 ### Getting Started
 
 ```bash
-git clone https://github.com/bullitt186/ha-omada-open-api.git
-cd ha-omada-open-api
+git clone https://github.com/yuhhey/ha-omada-open-api_ext.git
+cd ha-omada-open-api_ext
 # Open in VS Code → Reopen in Container
 # Dev HA instance at http://localhost:8123
 ```
