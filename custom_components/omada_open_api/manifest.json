@@ -1,14 +1,14 @@
 {
     "domain": "omada_open_api",
-    "name": "TP-Link Omada Open API",
+    "name": "TP-Link Omada Open API (ext)",
     "codeowners": [
-        "@bullitt186"
+        "@yuhhey"
     ],
     "config_flow": true,
-    "documentation": "https://github.com/bullitt186/ha-omada-open-api",
+    "documentation": "https://github.com/yuhhey/ha-omada-open-api_ext",
     "integration_type": "hub",
     "iot_class": "cloud_polling",
-    "issue_tracker": "https://github.com/bullitt186/ha-omada-open-api/issues",
+    "issue_tracker": "https://github.com/yuhhey/ha-omada-open-api_ext/issues",
     "requirements": [],
-    "version": "1.10.1"
+    "version": "2.0.0rc1"
 }

@@ -1,18 +1,26 @@
-# TP-Link Omada Open API Integration for Home Assistant
+# TP-Link Omada Open API Integration for Home Assistant (ext)
 
 <p align="center">
-  <img src="assets/logo@2x.png" alt="TP-Link Omada Open API" width="256">
+  <img src="assets/logo@2x.png" alt="TP-Link Omada Open API (ext)" width="256">
 </p>
 
 [![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
-[![GitHub Release](https://img.shields.io/github/release/bullitt186/ha-omada-open-api.svg?style=for-the-badge)](https://github.com/bullitt186/ha-omada-open-api/releases)
-[![License](https://img.shields.io/github/license/bullitt186/ha-omada-open-api.svg?style=for-the-badge)](LICENSE)
+[![GitHub Release](https://img.shields.io/github/release/yuhhey/ha-omada-open-api_ext.svg?style=for-the-badge)](https://github.com/yuhhey/ha-omada-open-api_ext/releases)
+[![License](https://img.shields.io/github/license/yuhhey/ha-omada-open-api_ext.svg?style=for-the-badge)](LICENSE)
 
 **Monitor and control your TP-Link Omada SDN infrastructure directly from Home Assistant.**
 
 [![My Home Assistant](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=omada_open_api)
 
 ---
+
+## Fork notice
+
+> This is an independently maintained fork/extension of
+> [bullitt186/ha-omada-open-api](https://github.com/bullitt186/ha-omada-open-api),
+> developed at [yuhhey/ha-omada-open-api_ext](https://github.com/yuhhey/ha-omada-open-api_ext).
+> It is **not** the original project and is not affiliated with or supported by
+> its maintainer. Report issues against this fork, not upstream.
 
 ## Disclaimer
 
@@ -87,15 +95,15 @@ Not every feature works on every setup — some need specific hardware:
 ### HACS (Recommended)
 
 1. Open **HACS → Integrations → ⋮ → Custom repositories**
-2. Add `https://github.com/bullitt186/ha-omada-open-api` as **Integration**
-3. Search for **TP-Link Omada Open API**, click **Download**, then restart Home Assistant
-4. Go to **Settings → Devices & Services → Add Integration** and search for **TP-Link Omada Open API**
+2. Add `https://github.com/yuhhey/ha-omada-open-api_ext` as **Integration**
+3. Search for **TP-Link Omada Open API (ext)**, click **Download**, then restart Home Assistant
+4. Go to **Settings → Devices & Services → Add Integration** and search for **TP-Link Omada Open API (ext)**
 
 [![My Home Assistant](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=omada_open_api)
 
 ### Manual
 
-1. Download the [latest release](https://github.com/bullitt186/ha-omada-open-api/releases) and copy the `omada_open_api` folder into your `custom_components/` directory
+1. Download the [latest release](https://github.com/yuhhey/ha-omada-open-api_ext/releases) and copy the `omada_open_api` folder into your `custom_components/` directory
 2. Restart Home Assistant
 3. Add the integration via **Settings → Devices & Services**
 
@@ -528,5 +536,5 @@ This project is licensed under the **MIT License** — see [LICENSE](LICENSE) fo
 
 ---
 
-[![GitHub stars](https://img.shields.io/github/stars/bullitt186/ha-omada-open-api.svg?style=social)](https://github.com/bullitt186/ha-omada-open-api/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/bullitt186/ha-omada-open-api.svg?style=social)](https://github.com/bullitt186/ha-omada-open-api/network)
+[![GitHub stars](https://img.shields.io/github/stars/yuhhey/ha-omada-open-api_ext.svg?style=social)](https://github.com/yuhhey/ha-omada-open-api_ext/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/yuhhey/ha-omada-open-api_ext.svg?style=social)](https://github.com/yuhhey/ha-omada-open-api_ext/network)
