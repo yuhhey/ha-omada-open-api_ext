@@ -2,6 +2,5 @@
   "name": "TP-Link Omada Open API (ext)",
   "homeassistant": "2026.1.0",
   "render_readme": true,
-  "zip_release": true,
-  "filename": "omada_open_api.zip"
+  "zip_release": false
 }
